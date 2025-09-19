@@ -70,7 +70,10 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               context.read<TodoBloc>().add(
-                CreateTodo(title: _titleController.text, description: _descriptionController.text),
+                TodoEvent.createTodo(
+                  title: _titleController.text,
+                  description: _descriptionController.text,
+                ),
               );
               Navigator.of(context).pop();
             }

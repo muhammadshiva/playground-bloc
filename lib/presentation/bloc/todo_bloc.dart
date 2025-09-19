@@ -24,7 +24,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     required this.updateTodo,
     required this.deleteTodo,
     required this.toggleTodoCompletion,
-  }) : super(TodoInitial()) {
+  }) : super(const TodoState.initial()) {
     on<LoadTodos>(_onLoadTodos);
     on<CreateTodo>(_onCreateTodo);
     on<UpdateTodo>(_onUpdateTodo);
@@ -33,45 +33,48 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Future<void> _onLoadTodos(LoadTodos event, Emitter<TodoState> emit) async {
-    emit(TodoLoading());
+    emit(const TodoState.loading());
 
     final result = await getAllTodos();
-    result.fold((failure) => emit(TodoError(failure)), (todos) => emit(TodoLoaded(todos)));
+    result.fold(
+      (failure) => emit(TodoState.error(failure)),
+      (todos) => emit(TodoState.loaded(todos)),
+    );
   }
 
   Future<void> _onCreateTodo(CreateTodo event, Emitter<TodoState> emit) async {
     final result = await createTodo(title: event.title, description: event.description);
 
-    result.fold((failure) => emit(TodoError(failure)), (todo) {
-      emit(const TodoSuccess('Todo created successfully'));
-      add(LoadTodos());
+    result.fold((failure) => emit(TodoState.error(failure)), (todo) {
+      emit(const TodoState.success('Todo created successfully'));
+      add(const TodoEvent.loadTodos());
     });
   }
 
   Future<void> _onUpdateTodo(UpdateTodo event, Emitter<TodoState> emit) async {
     final result = await updateTodo(event.todo);
 
-    result.fold((failure) => emit(TodoError(failure)), (todo) {
-      emit(const TodoSuccess('Todo updated successfully'));
-      add(LoadTodos());
+    result.fold((failure) => emit(TodoState.error(failure)), (todo) {
+      emit(const TodoState.success('Todo updated successfully'));
+      add(const TodoEvent.loadTodos());
     });
   }
 
   Future<void> _onDeleteTodo(DeleteTodo event, Emitter<TodoState> emit) async {
     final result = await deleteTodo(event.id);
 
-    result.fold((failure) => emit(TodoError(failure)), (_) {
-      emit(const TodoSuccess('Todo deleted successfully'));
-      add(LoadTodos());
+    result.fold((failure) => emit(TodoState.error(failure)), (_) {
+      emit(const TodoState.success('Todo deleted successfully'));
+      add(const TodoEvent.loadTodos());
     });
   }
 
   Future<void> _onToggleTodoCompletion(ToggleTodoCompletion event, Emitter<TodoState> emit) async {
     final result = await toggleTodoCompletion(event.todo);
 
-    result.fold((failure) => emit(TodoError(failure)), (todo) {
-      emit(const TodoSuccess('Todo status updated successfully'));
-      add(LoadTodos());
+    result.fold((failure) => emit(TodoState.error(failure)), (todo) {
+      emit(const TodoState.success('Todo status updated successfully'));
+      add(const TodoEvent.loadTodos());
     });
   }
 }

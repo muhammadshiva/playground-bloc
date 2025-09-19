@@ -29,7 +29,7 @@ void main() {
 
     testWidgets('should display app bar with correct title', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -41,20 +41,20 @@ void main() {
 
     testWidgets('should call LoadTodos on init', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
 
       // Assert
-      verify(mockTodoBloc.add(LoadTodos())).called(1);
+      verify(mockTodoBloc.add(const TodoEvent.loadTodos())).called(1);
     });
 
     testWidgets('should display loading indicator when state is TodoLoading', (
       WidgetTester tester,
     ) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoLoading());
+      when(mockTodoBloc.state).thenReturn(const TodoState.loading());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -65,7 +65,7 @@ void main() {
 
     testWidgets('should display empty state when no todos', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(const TodoLoaded([]));
+      when(mockTodoBloc.state).thenReturn(const TodoState.loaded([]));
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -96,7 +96,7 @@ void main() {
           updatedAt: DateTime(2024, 1, 2),
         ),
       ];
-      when(mockTodoBloc.state).thenReturn(TodoLoaded(testTodos));
+      when(mockTodoBloc.state).thenReturn(TodoState.loaded(testTodos));
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -110,7 +110,7 @@ void main() {
     testWidgets('should display error state when state is TodoError', (WidgetTester tester) async {
       // Arrange
       const errorMessage = 'Test Error';
-      when(mockTodoBloc.state).thenReturn(const TodoError(errorMessage));
+      when(mockTodoBloc.state).thenReturn(TodoState.error(errorMessage));
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -124,19 +124,21 @@ void main() {
     testWidgets('should call LoadTodos when retry button is tapped', (WidgetTester tester) async {
       // Arrange
       const errorMessage = 'Test Error';
-      when(mockTodoBloc.state).thenReturn(const TodoError(errorMessage));
+      when(mockTodoBloc.state).thenReturn(TodoState.error(errorMessage));
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.tap(find.text('Retry'));
 
       // Assert
-      verify(mockTodoBloc.add(LoadTodos())).called(2); // Once on init, once on retry
+      verify(
+        mockTodoBloc.add(const TodoEvent.loadTodos()),
+      ).called(2); // Once on init, once on retry
     });
 
     testWidgets('should display floating action button', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -148,7 +150,7 @@ void main() {
 
     testWidgets('should show add todo dialog when FAB is tapped', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -163,7 +165,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -181,7 +183,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -197,7 +199,7 @@ void main() {
 
     testWidgets('should display fallback message for unknown state', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());

@@ -6,29 +6,21 @@ void main() {
   group('TodoState', () {
     group('TodoInitial', () {
       test('should be a TodoState', () {
-        expect(TodoInitial(), isA<TodoState>());
-      });
-
-      test('should have empty props', () {
-        expect(TodoInitial().props, []);
+        expect(const TodoState.initial(), isA<TodoState>());
       });
 
       test('should support equality', () {
-        expect(TodoInitial(), equals(TodoInitial()));
+        expect(const TodoState.initial(), equals(const TodoState.initial()));
       });
     });
 
     group('TodoLoading', () {
       test('should be a TodoState', () {
-        expect(TodoLoading(), isA<TodoState>());
-      });
-
-      test('should have empty props', () {
-        expect(TodoLoading().props, []);
+        expect(const TodoState.loading(), isA<TodoState>());
       });
 
       test('should support equality', () {
-        expect(TodoLoading(), equals(TodoLoading()));
+        expect(const TodoState.loading(), equals(const TodoState.loading()));
       });
     });
 
@@ -53,28 +45,28 @@ void main() {
       ];
 
       test('should be a TodoState', () {
-        expect(TodoLoaded(testTodos), isA<TodoState>());
-      });
-
-      test('should have correct props', () {
-        final state = TodoLoaded(testTodos);
-        expect(state.props, [testTodos]);
+        expect(TodoState.loaded(testTodos), isA<TodoState>());
       });
 
       test('should support equality', () {
-        final state1 = TodoLoaded(testTodos);
-        final state2 = TodoLoaded(testTodos);
+        final state1 = TodoState.loaded(testTodos);
+        final state2 = TodoState.loaded(testTodos);
         final differentTodos = [testTodos[0]];
-        final state3 = TodoLoaded(differentTodos);
+        final state3 = TodoState.loaded(differentTodos);
 
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
 
       test('should handle empty todos list', () {
-        final state = TodoLoaded([]);
-        expect(state.todos, []);
-        expect(state.props, [[]]);
+        final state = TodoState.loaded([]);
+        state.when(
+          initial: () => fail('Should not be initial'),
+          loading: () => fail('Should not be loading'),
+          loaded: (todos) => expect(todos, []),
+          error: (message) => fail('Should not be error'),
+          success: (message) => fail('Should not be success'),
+        );
       });
     });
 
@@ -82,26 +74,27 @@ void main() {
       const testMessage = 'Test Error Message';
 
       test('should be a TodoState', () {
-        expect(const TodoError(testMessage), isA<TodoState>());
-      });
-
-      test('should have correct props', () {
-        const state = TodoError(testMessage);
-        expect(state.props, [testMessage]);
+        expect(const TodoState.error(testMessage), isA<TodoState>());
       });
 
       test('should support equality', () {
-        const state1 = TodoError(testMessage);
-        const state2 = TodoError(testMessage);
-        const state3 = TodoError('Different Message');
+        const state1 = TodoState.error(testMessage);
+        const state2 = TodoState.error(testMessage);
+        const state3 = TodoState.error('Different Message');
 
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
 
       test('should store error message', () {
-        const state = TodoError(testMessage);
-        expect(state.message, testMessage);
+        const state = TodoState.error(testMessage);
+        state.when(
+          initial: () => fail('Should not be initial'),
+          loading: () => fail('Should not be loading'),
+          loaded: (todos) => fail('Should not be loaded'),
+          error: (message) => expect(message, testMessage),
+          success: (message) => fail('Should not be success'),
+        );
       });
     });
 
@@ -109,26 +102,27 @@ void main() {
       const testMessage = 'Test Success Message';
 
       test('should be a TodoState', () {
-        expect(const TodoSuccess(testMessage), isA<TodoState>());
-      });
-
-      test('should have correct props', () {
-        const state = TodoSuccess(testMessage);
-        expect(state.props, [testMessage]);
+        expect(const TodoState.success(testMessage), isA<TodoState>());
       });
 
       test('should support equality', () {
-        const state1 = TodoSuccess(testMessage);
-        const state2 = TodoSuccess(testMessage);
-        const state3 = TodoSuccess('Different Message');
+        const state1 = TodoState.success(testMessage);
+        const state2 = TodoState.success(testMessage);
+        const state3 = TodoState.success('Different Message');
 
         expect(state1, equals(state2));
         expect(state1, isNot(equals(state3)));
       });
 
       test('should store success message', () {
-        const state = TodoSuccess(testMessage);
-        expect(state.message, testMessage);
+        const state = TodoState.success(testMessage);
+        state.when(
+          initial: () => fail('Should not be initial'),
+          loading: () => fail('Should not be loading'),
+          loaded: (todos) => fail('Should not be loaded'),
+          error: (message) => fail('Should not be error'),
+          success: (message) => expect(message, testMessage),
+        );
       });
     });
   });

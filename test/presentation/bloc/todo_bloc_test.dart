@@ -3,24 +3,24 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:playground_bloc/domain/entities/todo.dart';
-import 'package:playground_bloc/domain/usecases/create_todo.dart';
-import 'package:playground_bloc/domain/usecases/delete_todo.dart';
+import 'package:playground_bloc/domain/usecases/create_todo.dart' as create_todo;
+import 'package:playground_bloc/domain/usecases/delete_todo.dart' as delete_todo;
 import 'package:playground_bloc/domain/usecases/get_all_todos.dart';
-import 'package:playground_bloc/domain/usecases/toggle_todo_completion.dart';
-import 'package:playground_bloc/domain/usecases/update_todo.dart';
+import 'package:playground_bloc/domain/usecases/toggle_todo_completion.dart' as toggle_todo;
+import 'package:playground_bloc/domain/usecases/update_todo.dart' as update_todo;
 import 'package:playground_bloc/presentation/bloc/todo_bloc.dart';
 import 'package:playground_bloc/presentation/bloc/todo_event.dart';
 import 'package:playground_bloc/presentation/bloc/todo_state.dart';
 
 class MockGetAllTodos extends Mock implements GetAllTodos {}
 
-class MockCreateTodo extends Mock implements CreateTodo {}
+class MockCreateTodo extends Mock implements create_todo.CreateTodo {}
 
-class MockUpdateTodo extends Mock implements UpdateTodo {}
+class MockUpdateTodo extends Mock implements update_todo.UpdateTodo {}
 
-class MockDeleteTodo extends Mock implements DeleteTodo {}
+class MockDeleteTodo extends Mock implements delete_todo.DeleteTodo {}
 
-class MockToggleTodoCompletion extends Mock implements ToggleTodoCompletion {}
+class MockToggleTodoCompletion extends Mock implements toggle_todo.ToggleTodoCompletion {}
 
 void main() {
   late TodoBloc todoBloc;
@@ -71,7 +71,7 @@ void main() {
     ];
 
     test('initial state should be TodoInitial', () {
-      expect(todoBloc.state, TodoInitial());
+      expect(todoBloc.state, const TodoState.initial());
     });
 
     group('LoadTodos', () {
@@ -81,8 +81,8 @@ void main() {
           when(mockGetAllTodos()).thenAnswer((_) async => Right(testTodos));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(LoadTodos()),
-        expect: () => [TodoLoading(), TodoLoaded(testTodos)],
+        act: (bloc) => bloc.add(const TodoEvent.loadTodos()),
+        expect: () => [const TodoState.loading(), TodoState.loaded(testTodos)],
         verify: (_) {
           verify(mockGetAllTodos()).called(1);
         },
@@ -94,8 +94,8 @@ void main() {
           when(mockGetAllTodos()).thenAnswer((_) async => const Left('Failed to load todos'));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(LoadTodos()),
-        expect: () => [TodoLoading(), const TodoError('Failed to load todos')],
+        act: (bloc) => bloc.add(const TodoEvent.loadTodos()),
+        expect: () => [const TodoState.loading(), const TodoState.error('Failed to load todos')],
         verify: (_) {
           verify(mockGetAllTodos()).called(1);
         },
@@ -115,13 +115,13 @@ void main() {
           when(mockGetAllTodos()).thenAnswer((_) async => Right(testTodos));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(const CreateTodo(title: testTitle, description: testDescription)),
-        expect:
-            () => [
-              const TodoSuccess('Todo created successfully'),
-              TodoLoading(),
-              TodoLoaded(testTodos),
-            ],
+        act: (bloc) =>
+            bloc.add(const TodoEvent.createTodo(title: testTitle, description: testDescription)),
+        expect: () => [
+          const TodoState.success('Todo created successfully'),
+          const TodoState.loading(),
+          TodoState.loaded(testTodos),
+        ],
         verify: (_) {
           verify(mockCreateTodo(title: testTitle, description: testDescription)).called(1);
           verify(mockGetAllTodos()).called(1);
@@ -136,8 +136,9 @@ void main() {
           ).thenAnswer((_) async => const Left('Failed to create todo'));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(const CreateTodo(title: testTitle, description: testDescription)),
-        expect: () => [const TodoError('Failed to create todo')],
+        act: (bloc) =>
+            bloc.add(const TodoEvent.createTodo(title: testTitle, description: testDescription)),
+        expect: () => [const TodoState.error('Failed to create todo')],
         verify: (_) {
           verify(mockCreateTodo(title: testTitle, description: testDescription)).called(1);
           verifyNever(mockGetAllTodos());
@@ -155,13 +156,12 @@ void main() {
           when(mockGetAllTodos()).thenAnswer((_) async => Right(testTodos));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(UpdateTodo(testTodo)),
-        expect:
-            () => [
-              const TodoSuccess('Todo updated successfully'),
-              TodoLoading(),
-              TodoLoaded(testTodos),
-            ],
+        act: (bloc) => bloc.add(TodoEvent.updateTodo(testTodo)),
+        expect: () => [
+          const TodoState.success('Todo updated successfully'),
+          const TodoState.loading(),
+          TodoState.loaded(testTodos),
+        ],
         verify: (_) {
           verify(mockUpdateTodo(testTodo)).called(1);
           verify(mockGetAllTodos()).called(1);
@@ -176,8 +176,8 @@ void main() {
           ).thenAnswer((_) async => const Left('Failed to update todo'));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(UpdateTodo(testTodo)),
-        expect: () => [const TodoError('Failed to update todo')],
+        act: (bloc) => bloc.add(TodoEvent.updateTodo(testTodo)),
+        expect: () => [const TodoState.error('Failed to update todo')],
         verify: (_) {
           verify(mockUpdateTodo(testTodo)).called(1);
           verifyNever(mockGetAllTodos());
@@ -195,13 +195,12 @@ void main() {
           when(mockGetAllTodos()).thenAnswer((_) async => Right(testTodos));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(const DeleteTodo(testId)),
-        expect:
-            () => [
-              const TodoSuccess('Todo deleted successfully'),
-              TodoLoading(),
-              TodoLoaded(testTodos),
-            ],
+        act: (bloc) => bloc.add(const TodoEvent.deleteTodo(testId)),
+        expect: () => [
+          const TodoState.success('Todo deleted successfully'),
+          const TodoState.loading(),
+          TodoState.loaded(testTodos),
+        ],
         verify: (_) {
           verify(mockDeleteTodo(testId)).called(1);
           verify(mockGetAllTodos()).called(1);
@@ -214,8 +213,8 @@ void main() {
           when(mockDeleteTodo(testId)).thenAnswer((_) async => const Left('Failed to delete todo'));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(const DeleteTodo(testId)),
-        expect: () => [const TodoError('Failed to delete todo')],
+        act: (bloc) => bloc.add(const TodoEvent.deleteTodo(testId)),
+        expect: () => [const TodoState.error('Failed to delete todo')],
         verify: (_) {
           verify(mockDeleteTodo(testId)).called(1);
           verifyNever(mockGetAllTodos());
@@ -233,13 +232,12 @@ void main() {
           when(mockGetAllTodos()).thenAnswer((_) async => Right(testTodos));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(ToggleTodoCompletion(testTodo)),
-        expect:
-            () => [
-              const TodoSuccess('Todo status updated successfully'),
-              TodoLoading(),
-              TodoLoaded(testTodos),
-            ],
+        act: (bloc) => bloc.add(TodoEvent.toggleTodoCompletion(testTodo)),
+        expect: () => [
+          const TodoState.success('Todo status updated successfully'),
+          const TodoState.loading(),
+          TodoState.loaded(testTodos),
+        ],
         verify: (_) {
           verify(mockToggleTodoCompletion(testTodo)).called(1);
           verify(mockGetAllTodos()).called(1);
@@ -254,8 +252,8 @@ void main() {
           ).thenAnswer((_) async => const Left('Failed to toggle todo'));
           return todoBloc;
         },
-        act: (bloc) => bloc.add(ToggleTodoCompletion(testTodo)),
-        expect: () => [const TodoError('Failed to toggle todo')],
+        act: (bloc) => bloc.add(TodoEvent.toggleTodoCompletion(testTodo)),
+        expect: () => [const TodoState.error('Failed to toggle todo')],
         verify: (_) {
           verify(mockToggleTodoCompletion(testTodo)).called(1);
           verifyNever(mockGetAllTodos());

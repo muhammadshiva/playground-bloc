@@ -1,22 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../domain/entities/todo.dart';
 
-class TodoModel extends Equatable {
-  final int? id;
-  final String title;
-  final String description;
-  final bool isCompleted;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+part 'todo_model.freezed.dart';
+part 'todo_model.g.dart';
 
-  const TodoModel({
-    this.id,
-    required this.title,
-    required this.description,
-    required this.isCompleted,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+@freezed
+abstract class TodoModel with _$TodoModel {
+  const factory TodoModel({
+    int? id,
+    required String title,
+    required String description,
+    @Default(false) bool isCompleted,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _TodoModel;
 
   factory TodoModel.fromEntity(Todo todo) {
     return TodoModel(
@@ -40,6 +37,10 @@ class TodoModel extends Equatable {
     );
   }
 
+  factory TodoModel.fromJson(Map<String, dynamic> json) => _$TodoModelFromJson(json);
+}
+
+extension TodoModelX on TodoModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -61,7 +62,4 @@ class TodoModel extends Equatable {
       updatedAt: updatedAt,
     );
   }
-
-  @override
-  List<Object?> get props => [id, title, description, isCompleted, createdAt, updatedAt];
 }

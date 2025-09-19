@@ -38,7 +38,7 @@ void main() {
 
     testWidgets('should display dialog with title and form fields', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -54,7 +54,7 @@ void main() {
 
     testWidgets('should display cancel and add todo buttons', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -68,7 +68,7 @@ void main() {
 
     testWidgets('should close dialog when cancel is tapped', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -83,7 +83,7 @@ void main() {
 
     testWidgets('should show validation errors for empty fields', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -101,7 +101,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -124,7 +124,7 @@ void main() {
 
     testWidgets('should close dialog after successful submission', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -145,7 +145,7 @@ void main() {
 
     testWidgets('should not submit form when validation fails', (WidgetTester tester) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());
@@ -168,7 +168,7 @@ void main() {
       WidgetTester tester,
     ) async {
       // Arrange
-      when(mockTodoBloc.state).thenReturn(TodoInitial());
+      when(mockTodoBloc.state).thenReturn(const TodoState.initial());
 
       // Act
       await tester.pumpWidget(createWidgetUnderTest());

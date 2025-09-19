@@ -4,7 +4,7 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.8.0
 
 dependencies:
   dartz: ^0.10.1
@@ -13,9 +13,10 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.1
   get_it: ^8.2.0
-  json_serializable: ^6.11.1
   sqflite: ^2.4.2
   path: ^1.8.3
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -23,11 +24,12 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   bloc_test: ^10.0.0
   mockito: ^5.4.4
-  build_runner: ^2.4.9
-  json_serializable: ^6.11.1
+  build_runner: ^2.7.1
   test: ^1.25.8
   integration_test:
     sdk: flutter
+  freezed: ^3.2.3
+  json_serializable: ^6.11.1
 
 flutter:
   uses-material-design: true
