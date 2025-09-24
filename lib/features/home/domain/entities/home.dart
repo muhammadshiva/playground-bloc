@@ -1,0 +1,8 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'home.freezed.dart';
+
+@freezed
+abstract class Home with _$Home {
+  const factory Home({required String id, String? name}) = _Home;
+}

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:playground_bloc/data/models/todo_model.dart';
-import 'package:playground_bloc/domain/entities/todo.dart';
+import 'package:playground_bloc/features/todo/data/models/todo_model.dart';
+import 'package:playground_bloc/features/todo/domain/entities/todo.dart';
 
 void main() {
   group('TodoModel', () {

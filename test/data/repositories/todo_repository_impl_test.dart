@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:playground_bloc/data/datasources/database_helper.dart';
-import 'package:playground_bloc/data/models/todo_model.dart';
-import 'package:playground_bloc/data/repositories/todo_repository_impl.dart';
-import 'package:playground_bloc/domain/entities/todo.dart';
+import 'package:playground_bloc/features/todo/data/datasources/database_helper.dart';
+import 'package:playground_bloc/features/todo/data/models/todo_model.dart';
+import 'package:playground_bloc/features/todo/data/repositories/todo_repository_impl.dart';
+import 'package:playground_bloc/features/todo/domain/entities/todo.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MockDatabaseHelper extends Mock implements DatabaseHelper {}

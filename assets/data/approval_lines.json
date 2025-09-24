@@ -1,0 +1,34 @@
+{
+  "approvalLines": [
+    {
+      "name": "Yokevin Mayer Van Persie",
+      "position": "Big Boss",
+      "approvedDate": "Mon, 1 Jan 2025",
+      "isApproved": true
+    },
+    {
+      "name": "John Doe",
+      "position": "Manager",
+      "approvedDate": "Mon, 1 Jan 2025",
+      "isApproved": false
+    },
+    {
+      "name": "Sarah Wilson",
+      "position": "Senior Manager",
+      "approvedDate": "Mon, 1 Jan 2025",
+      "isApproved": false
+    },
+    {
+      "name": "Michael Chen",
+      "position": "Director",
+      "approvedDate": "Tue, 2 Jan 2025",
+      "isApproved": true
+    },
+    {
+      "name": "Emily Rodriguez",
+      "position": "VP Operations",
+      "approvedDate": "Mon, 1 Jan 2025",
+      "isApproved": false
+    }
+  ]
+}

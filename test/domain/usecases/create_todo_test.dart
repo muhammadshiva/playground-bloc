@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:playground_bloc/domain/entities/todo.dart';
-import 'package:playground_bloc/domain/repositories/todo_repository.dart';
-import 'package:playground_bloc/domain/usecases/create_todo.dart';
+import 'package:playground_bloc/features/todo/domain/entities/todo.dart';
+import 'package:playground_bloc/features/todo/domain/repositories/todo_repository.dart';
+import 'package:playground_bloc/features/todo/domain/usecases/create_todo.dart';
 
 class MockTodoRepository extends Mock implements TodoRepository {}
 

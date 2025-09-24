@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:playground_bloc/domain/entities/todo.dart';
-import 'package:playground_bloc/presentation/bloc/todo_state.dart';
+import 'package:playground_bloc/features/todo/domain/entities/todo.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_state.dart';
 
 void main() {
   group('TodoState', () {

@@ -2,15 +2,16 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:playground_bloc/domain/entities/todo.dart';
-import 'package:playground_bloc/domain/usecases/create_todo.dart' as create_todo;
-import 'package:playground_bloc/domain/usecases/delete_todo.dart' as delete_todo;
-import 'package:playground_bloc/domain/usecases/get_all_todos.dart';
-import 'package:playground_bloc/domain/usecases/toggle_todo_completion.dart' as toggle_todo;
-import 'package:playground_bloc/domain/usecases/update_todo.dart' as update_todo;
-import 'package:playground_bloc/presentation/bloc/todo_bloc.dart';
-import 'package:playground_bloc/presentation/bloc/todo_event.dart';
-import 'package:playground_bloc/presentation/bloc/todo_state.dart';
+import 'package:playground_bloc/features/todo/domain/entities/todo.dart';
+import 'package:playground_bloc/features/todo/domain/usecases/create_todo.dart' as create_todo;
+import 'package:playground_bloc/features/todo/domain/usecases/delete_todo.dart' as delete_todo;
+import 'package:playground_bloc/features/todo/domain/usecases/get_all_todos.dart';
+import 'package:playground_bloc/features/todo/domain/usecases/toggle_todo_completion.dart'
+    as toggle_todo;
+import 'package:playground_bloc/features/todo/domain/usecases/update_todo.dart' as update_todo;
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_bloc.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_event.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_state.dart';
 
 class MockGetAllTodos extends Mock implements GetAllTodos {}
 

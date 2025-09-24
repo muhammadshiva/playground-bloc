@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mockito/mockito.dart';
-import 'package:playground_bloc/domain/entities/todo.dart';
-import 'package:playground_bloc/presentation/bloc/todo_bloc.dart';
-import 'package:playground_bloc/presentation/bloc/todo_state.dart';
+import 'package:playground_bloc/features/todo/domain/entities/todo.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_bloc.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_state.dart';
 
 /// Mock classes for testing
 class MockTodoBloc extends Mock implements TodoBloc {}
@@ -45,15 +45,17 @@ class TestDataFactory {
 class WidgetTestHelpers {
   static Widget createTestApp({required Widget child, TodoBloc? todoBloc}) {
     return MaterialApp(
-      home:
-          todoBloc != null
-              ? BlocProvider<TodoBloc>(create: (context) => todoBloc, child: child)
-              : child,
+      home: todoBloc != null
+          ? BlocProvider<TodoBloc>(create: (context) => todoBloc, child: child)
+          : child,
     );
   }
 
   static Widget createTestScaffold({required Widget child, TodoBloc? todoBloc}) {
-    return createTestApp(todoBloc: todoBloc, child: Scaffold(body: child));
+    return createTestApp(
+      todoBloc: todoBloc,
+      child: Scaffold(body: child),
+    );
   }
 }
 

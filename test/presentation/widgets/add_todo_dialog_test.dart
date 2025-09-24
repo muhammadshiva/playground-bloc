@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:playground_bloc/presentation/bloc/todo_bloc.dart';
-import 'package:playground_bloc/presentation/bloc/todo_event.dart';
-import 'package:playground_bloc/presentation/widgets/add_todo_dialog.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_bloc.dart';
+import 'package:playground_bloc/features/todo/presentation/bloc/todo_event.dart';
+import 'package:playground_bloc/features/todo/presentation/widgets/add_todo_dialog.dart';
 
 class MockTodoBloc extends Mock implements TodoBloc {}
 
