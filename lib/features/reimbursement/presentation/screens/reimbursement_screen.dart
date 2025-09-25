@@ -335,9 +335,9 @@ class _ReimbursementScreenState extends State<ReimbursementScreen> {
                 ],
 
                 // Detail description (if available)
-                if (item.detail != null) ...[
+                if (item.description != null) ...[
                   Text(
-                    item.detail!,
+                    item.description!,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], height: 1.4),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
