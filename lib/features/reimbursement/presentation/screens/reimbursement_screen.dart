@@ -302,43 +302,47 @@ class _ReimbursementScreenState extends State<ReimbursementScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Claim type with icon
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: _getClaimTypeColor(item.claimType).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        _getClaimTypeIcon(item.claimType),
-                        size: 16,
-                        color: _getClaimTypeColor(item.claimType),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        item.claimType,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF2C3E50),
+                // Claim type with icon (if available)
+                if (item.claimType != null) ...[
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: _getClaimTypeColor(item.claimType!).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          _getClaimTypeIcon(item.claimType!),
+                          size: 16,
+                          color: _getClaimTypeColor(item.claimType!),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          item.claimType!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF2C3E50),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                ],
 
-                // Detail description
-                Text(
-                  item.detail,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[700], height: 1.4),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                // Detail description (if available)
+                if (item.detail != null) ...[
+                  Text(
+                    item.detail!,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[700], height: 1.4),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
                 const SizedBox(height: 16),
 
                 // Footer with date and name
@@ -347,7 +351,7 @@ class _ReimbursementScreenState extends State<ReimbursementScreen> {
                     Icon(Icons.calendar_today_outlined, size: 14, color: Colors.grey[600]),
                     const SizedBox(width: 6),
                     Text(
-                      _formatDate(item.date),
+                      item.date != null ? _formatDate(item.date!) : 'No date',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],

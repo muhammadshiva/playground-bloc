@@ -4,7 +4,7 @@ import '../../domain/usecases/get_all_reimbursement.dart';
 import '../../domain/usecases/create_reimbursement.dart';
 import '../../domain/usecases/update_reimbursement.dart';
 import '../../domain/usecases/delete_reimbursement.dart';
-import '../utils/reimbursement_form_helper.dart';
+import '../utils/functions/reimbursement_form_helper.dart';
 import 'reimbursement_event.dart';
 import 'reimbursement_state.dart';
 
@@ -53,13 +53,9 @@ class ReimbursementBloc extends Bloc<ReimbursementEvent, ReimbursementState> {
 
     on<ReimbursementDelete>((event, emit) async {
       final currentState = state;
-      print('Delete event triggered for ID: ${event.id}');
-      print('Current state type: ${currentState.runtimeType}');
 
       // If we have a loaded state, show loading while keeping the current list
       if (currentState is ReimbursementLoaded) {
-        print('Current loaded items count: ${currentState.items.length}');
-        print('Items before deletion: ${currentState.items.map((e) => e.id).toList()}');
         emit(ReimbursementState.loading());
       } else {
         emit(const ReimbursementState.loading());
@@ -68,16 +64,12 @@ class ReimbursementBloc extends Bloc<ReimbursementEvent, ReimbursementState> {
       final result = await deleteReimbursement(event.id);
       result.fold(
         (failure) {
-          print('Delete failed: $failure');
           emit(ReimbursementState.error(failure));
         },
         (_) {
-          print('Delete successful for ID: ${event.id}');
           // If we had a loaded state, remove the deleted item from the list
           if (currentState is ReimbursementLoaded) {
             final updatedItems = currentState.items.where((item) => item.id != event.id).toList();
-            print('Updated items count: ${updatedItems.length}');
-            print('Items after deletion: ${updatedItems.map((e) => e.id).toList()}');
             emit(ReimbursementState.loaded(updatedItems));
           } else {
             // If no loaded state, just show success and let user refresh

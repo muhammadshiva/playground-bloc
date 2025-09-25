@@ -10,8 +10,8 @@ class ReimbursementRepositoryImpl implements ReimbursementRepository {
   @override
   Future<Either<String, Reimbursement>> create(Reimbursement item) async {
     try {
-      await dataSource.create(item);
-      return Right(item);
+      final createdItem = await dataSource.create(item);
+      return Right(createdItem);
     } catch (e) {
       return Left(e.toString());
     }
@@ -51,8 +51,8 @@ class ReimbursementRepositoryImpl implements ReimbursementRepository {
   @override
   Future<Either<String, Reimbursement>> update(Reimbursement item) async {
     try {
-      await dataSource.update(item);
-      return Right(item);
+      final updatedItem = await dataSource.update(item);
+      return Right(updatedItem);
     } catch (e) {
       return Left(e.toString());
     }

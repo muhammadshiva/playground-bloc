@@ -1,5 +1,5 @@
-import '../../domain/entities/reimbursement.dart';
-import '../bloc/reimbursement_state.dart';
+import '../../../domain/entities/reimbursement.dart';
+import '../../bloc/reimbursement_state.dart';
 
 /// Helper class to collect and validate form data from ReimbursementFormScreen and ReimbursementBottomSheet
 class ReimbursementFormHelper {
@@ -102,16 +102,17 @@ class ReimbursementFormHelper {
   static Map<String, dynamic> toApiPayload(Reimbursement reimbursement) {
     return {
       'id': reimbursement.id,
-      'date': reimbursement.date.toIso8601String(),
-      'claimType': reimbursement.claimType,
-      'detail': reimbursement.detail,
+      'name': reimbursement.name,
       'nominal': reimbursement.nominal,
       'description': reimbursement.description,
+      if (reimbursement.date != null) 'date': reimbursement.date!.toIso8601String(),
+      if (reimbursement.claimType != null) 'claimType': reimbursement.claimType,
+      if (reimbursement.detail != null) 'detail': reimbursement.detail,
       'imagePath': reimbursement.imagePath,
       'imagePaths': reimbursement.imagePaths,
       'status': reimbursement.status,
-      'createdAt': reimbursement.createdAt?.toIso8601String(),
-      'updatedAt': reimbursement.updatedAt?.toIso8601String(),
+      if (reimbursement.createdAt != null) 'createdAt': reimbursement.createdAt!.toIso8601String(),
+      if (reimbursement.updatedAt != null) 'updatedAt': reimbursement.updatedAt!.toIso8601String(),
     };
   }
 }

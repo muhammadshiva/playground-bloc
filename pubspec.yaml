@@ -18,6 +18,7 @@ dependencies:
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   image_picker: ^1.0.4
+  venturo_api_manager: ^1.0.3
 
 dev_dependencies:
   flutter_test:

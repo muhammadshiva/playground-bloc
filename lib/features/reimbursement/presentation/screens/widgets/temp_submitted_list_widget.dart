@@ -87,15 +87,19 @@ class TempSubmittedListWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        item.claimType,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Date: ${_formatDate(item.date)}',
-                        style: const TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
+                      if (item.claimType != null) ...[
+                        Text(
+                          item.claimType!,
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        const SizedBox(height: 4),
+                      ],
+                      if (item.date != null) ...[
+                        Text(
+                          'Date: ${_formatDate(item.date!)}',
+                          style: const TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                      ],
                       if (item.nominal != null && item.nominal!.isNotEmpty) ...[
                         const SizedBox(height: 2),
                         Text(
@@ -122,10 +126,10 @@ class TempSubmittedListWidget extends StatelessWidget {
                 ),
               ],
             ),
-            if (item.detail.isNotEmpty) ...[
+            if (item.detail != null && item.detail!.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                item.detail,
+                item.detail!,
                 style: const TextStyle(fontSize: 14),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
